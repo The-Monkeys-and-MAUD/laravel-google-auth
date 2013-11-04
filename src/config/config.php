@@ -25,8 +25,12 @@ return array(
     |--------------------------------------------------------------------------
     | Google oauth2_redirect_uri
     |--------------------------------------------------------------------------
+    |
+    | The default, URL::to('/'), will usually suffice - redirects the user to
+    | your home page after a successful login
+    |
     */
-    'redirectUri' => null,
+    'redirectUri' => URL::to('/'),
 
     /*
     |--------------------------------------------------------------------------
