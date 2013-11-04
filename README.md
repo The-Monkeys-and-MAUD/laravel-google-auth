@@ -10,6 +10,30 @@ Installation
 ------------
 To get the latest version of cachebuster simply require it in your composer.json file.
 
+> **Note**: This package depends on a non-packagist package, google-api-php-client, so you will need to manually add
+  the following repository definition to your project's `composer.json` file before attempting to run `composer update`
+  or `composer install`:
+
+
+```json
+	"repositories": [
+		{
+      "type": "package",
+      "package": {
+        "name": "google/google-api-php-client",
+        "version": "0.6.7",
+        "dist": {
+          "url": "http://google-api-php-client.googlecode.com/files/google-api-php-client-0.6.7.tar.gz",
+          "type": "tar"
+        },
+        "autoload": {
+          "classmap": ["src/"]
+        }
+      }
+		}
+	],
+```
+
 ```bash
 composer require themonkeys/laravel-google-auth:dev-master --no-update
 composer update themonkeys/laravel-google-auth
