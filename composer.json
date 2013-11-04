@@ -1,0 +1,20 @@
+{
+    "name": "themonkeys/laravel-google-auth",
+    "description": "Laravel Authentication Driver for Google OAuth authentication",
+    "authors": [
+        {
+            "name": "The Monkeys",
+            "email": "developers@themonkeys.com.au"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x"
+    },
+    "autoload": {
+        "psr-0": {
+            "Themonkeys\\LaravelGoogleAuth": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
