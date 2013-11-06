@@ -26,12 +26,6 @@ return array(
     | Google oauth2_redirect_uri
     |--------------------------------------------------------------------------
     |
-    | Default URI to redirect the user to after a successful login. If the
-    | user attempted to access a secured URL and was redirected to the login
-    | page, they'll be redirected to their original intended URL and this
-    | setting will be ignored. This setting is only used when the user visited
-    | the login page directly.
-    |
     | The default, URL::to('/'), will usually suffice - redirects the user to
     | your home page after a successful login
     |
