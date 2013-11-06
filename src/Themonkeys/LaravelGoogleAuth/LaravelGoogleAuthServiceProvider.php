@@ -1,6 +1,7 @@
 <?php namespace Themonkeys\LaravelGoogleAuth;
 
 use Illuminate\Auth\AuthServiceProvider;
+use Illuminate\Support\Facades\Session;
 
 
 class LaravelGoogleAuthServiceProvider extends AuthServiceProvider {
@@ -44,7 +45,7 @@ class LaravelGoogleAuthServiceProvider extends AuthServiceProvider {
             $client->setApplicationName($app['config']->get('laravel-google-auth::clientId'));
             $client->setClientId($app['config']->get('laravel-google-auth::clientId'));
             $client->setClientSecret($app['config']->get('laravel-google-auth::clientSecret'));
-            $client->setRedirectUri($app['config']->get('laravel-google-auth::redirectUri'));
+            $client->setRedirectUri(Session::get('url.intended', $app['config']->get('laravel-google-auth::redirectUri')));
             $client->setDeveloperKey($app['config']->get('laravel-google-auth::developerKey'));
 
             return $client;
