@@ -30,7 +30,7 @@ return array(
     | your home page after a successful login
     |
     */
-    'redirectUri' => URL::to('/'),
+    'redirectUri' => URL::to('/') . '/', // URL:to('/') doesn't include the trailing slash
 
     /*
     |--------------------------------------------------------------------------
