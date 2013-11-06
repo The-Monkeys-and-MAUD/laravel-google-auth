@@ -14,11 +14,7 @@ class GoogleUserProvider implements UserProviderInterface {
         $this->client = App::make('google-client');
         $this->oauth2 = new \Google_Oauth2Service($this->client);
 
-        if (Session::has($this->getTokenName())) {
-            $this->client->setAccessToken(Session::get($this->getTokenName()));
-
-        } else if (isset($_GET['code'])) {
-
+        if (isset($_GET['code'])) {
             $this->client->authenticate($_GET['code']);
             Session::put($this->getTokenName(), $this->client->getAccessToken());
 
@@ -27,7 +23,8 @@ class GoogleUserProvider implements UserProviderInterface {
 
             header('Location: ' . filter_var($url, FILTER_SANITIZE_URL));
             exit();
-
+        } else if (Session::has($this->getTokenName())) {
+            $this->client->setAccessToken(Session::get($this->getTokenName()));
         }
     }
 
