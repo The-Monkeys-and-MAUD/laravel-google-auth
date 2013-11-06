@@ -38,7 +38,7 @@ class GoogleUserProvider implements UserProviderInterface {
     public function retrieveById($identifier)
     {
         $user = $this->retrieveByCredentials(array());
-        if ($user->getAuthIdentifier() == $identifier) {
+        if ($user && $user->getAuthIdentifier() == $identifier) {
             return $user;
         }
     }
