@@ -5,6 +5,7 @@ use Illuminate\Auth\UserProviderInterface;
 use Illuminate\Support\Facades\App;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 
@@ -14,16 +15,7 @@ class GoogleUserProvider implements UserProviderInterface {
         $this->client = App::make('google-client');
         $this->oauth2 = new \Google_Oauth2Service($this->client);
 
-        if (isset($_GET['code'])) {
-            $this->client->authenticate($_GET['code']);
-            Session::put($this->getTokenName(), $this->client->getAccessToken());
-
-            // strip the querystring from the current URL
-            $url = rtrim(preg_replace('|&?code=[^&]+|', '', URL::full()), '?');
-
-            header('Location: ' . filter_var($url, FILTER_SANITIZE_URL));
-            exit();
-        } else if (Session::has($this->getTokenName())) {
+        if (Session::has($this->getTokenName())) {
             $this->client->setAccessToken(Session::get($this->getTokenName()));
         }
     }
@@ -84,6 +76,25 @@ class GoogleUserProvider implements UserProviderInterface {
     public function getTokenName()
     {
         return 'googleauth_'.md5(get_class($this));
+    }
+
+    /**
+     * If this request is the redirect from a successful authorization grant, store the access token in the session
+     * and return a Laravel redirect Response to send the user to their requested page. Otherwise returns null
+     * @return Response or null
+     */
+    public function finishAuthenticationIfRequired()
+    {
+        if (isset($_GET['code'])) {
+            $this->client->authenticate($_GET['code']);
+            Session::put($this->getTokenName(), $this->client->getAccessToken());
+
+            // strip the querystring from the current URL
+            $url = rtrim(preg_replace('|&?code=[^&]+|', '', URL::full()), '?');
+
+            return Redirect::to(filter_var($url, FILTER_SANITIZE_URL));
+        }
+        return null;
     }
 
 }

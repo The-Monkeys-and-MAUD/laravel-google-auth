@@ -91,7 +91,7 @@ file:
 ```php
 Route::get('/login', function() {
     return View::make('login', array(
-      'authUrl' => Auth::getProvider()->getAuthUrl()
+      'authUrl' => Auth::getAuthUrl()
     ));
 });
 ```
@@ -103,6 +103,16 @@ Then use `{{ $authUrl }}` as the `href` for a link in your `login.blade.php` vie
 
 ```php
 <a class='login' href='{{ $authUrl }}'>Connect Me!</a>
+```
+
+Then you need to add the `'before'` filter `'google-finish-authentication'` to the route that google redirects to after
+authentication is complete. Make sure this filter is applied first, before the `'auth'` filter - otherwise the `'auth'`
+filter will send the user back to the login page and their session will be lost.
+
+```php
+Route::group(array('before' => array('google-finish-authentication', 'auth')), function() {
+    Route::get('/', 'HomeController@showWelcome');
+});
 ```
 
 Adding a logout facility to your app is the same as with any other authentication driver - just add the following to

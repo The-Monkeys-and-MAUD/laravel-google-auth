@@ -50,5 +50,9 @@ class LaravelGoogleAuthServiceProvider extends AuthServiceProvider {
             return $client;
         });
 
+        $app['router']->filter('google-finish-authentication', function($route, $request) use ($app) {
+            return $app['auth']->finishAuthenticationIfRequired();
+        });
+
 	}
 }

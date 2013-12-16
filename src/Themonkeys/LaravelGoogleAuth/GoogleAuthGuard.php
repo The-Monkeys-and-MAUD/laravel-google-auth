@@ -24,5 +24,18 @@ class GoogleAuthGuard extends Guard {
         parent::logout();
     }
 
+    public function getAuthUrl()
+    {
+        return $this->provider->getAuthUrl();
+    }
 
+    /**
+     * If this request is the redirect from a successful authorization grant, store the access token in the session
+     * and return a Laravel redirect Response to send the user to their requested page. Otherwise returns null
+     * @return Response or null
+     */
+    public function finishAuthenticationIfRequired()
+    {
+        return $this->provider->finishAuthenticationIfRequired();
+    }
 }
