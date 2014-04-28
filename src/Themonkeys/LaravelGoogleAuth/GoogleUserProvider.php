@@ -20,6 +20,8 @@ class GoogleUserProvider implements UserProviderInterface {
         }
     }
 
+    public function retrieveByToken( $identifier, $token ){}
+    public function updateRememberToken( \Illuminate\Auth\UserInterface $user, $token ){}
 
     /**
      * Retrieve a user by their unique identifier.
